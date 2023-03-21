@@ -1,0 +1,106 @@
+<div class="container mx-auto bg-slate-200">
+  <div class="py-2 text-center">
+    <p class="text-3xl text-slate-600">{{formStatus}} Posts</p>
+    <p class="text-slate-400 p-2">You can {{formStatus}} Posts from here...</p>
+  </div>
+
+  <div *ngIf="postForm">
+    <div class="flex flex-col md:flex-row justify-center gap-4">
+      <form action="" class="flex flex-col" [formGroup]="postForm" (ngSubmit)="onSubmit()">
+        <div class="flex flex-col md:flex-row bg-emerald-600 p-4">
+          <div class="flex-1 p-4">
+            <!-- title -->
+            <div class="grid grid-cols-1">
+              <label class="text-lg" for="">Title</label>
+              <input class="px-4 py-2" type="text" (keyup)="onTitleChanged($event)" formControlName="title">
+              <div *ngIf="FC['title'].errors?.['required']">
+                <p class="bg-red-300 py-1 text-center" *ngIf="FC['title'].touched && FC['title'].invalid">Title is
+                  required</p>
+              </div>
+              <div *ngIf="FC['title'].errors?.['minlength']">
+                <p class="bg-red-300 py-1 text-center" *ngIf="FC['title'].touched && FC['title'].invalid">Title must be
+                  atleast
+                  10
+                  characters long</p>
+              </div>
+            </div>
+            <!-- permalink -->
+            <div class="grid grid-cols-1">
+              <label class="text-lg" for="">Permalink</label>
+              <input class="px-4 py-2 bg-red-100 focus:outline-none pointer-events-none" type="text" [ngModel]="permalink"
+                name="permalink" formControlName="permalink">
+              <div *ngIf="FC['permalink'].errors?.['required']">
+                <p class="bg-red-300 py-1 text-center" *ngIf="FC['permalink'].touched && FC['permalink'].invalid">
+                  Permalink is
+                  required</p>
+              </div>
+            </div>
+            <!-- Excerpt -->
+            <div class="grid grid-cols-1">
+              <label class="text-lg" for="">Excerpt</label>
+              <textarea class="border-2" name="" id="" cols="30" rows="10" formControlName="excerpt"></textarea>
+              <div *ngIf="FC['excerpt'].errors?.['required']">
+                <p class="bg-red-300 py-1 text-center" *ngIf="FC['excerpt'].touched && FC['excerpt'].invalid">Excerpt is
+                  required
+                </p>
+              </div>
+              <div *ngIf="FC['excerpt'].errors?.['minlength']">
+                <p class="bg-red-300 py-1 text-center" *ngIf="FC['excerpt'].touched && FC['excerpt'].invalid">Excerpt must
+                  be
+                  atleast 50 characters long</p>
+              </div>
+            </div>
+          </div>
+          <!-- category -->
+          <div class="flex-1 p-4">
+            <div class="grid grid-cols-1">
+              <label class="text-lg" for="">Please select a post category</label>
+              <select class="px-4 py-2" formControlName="category">
+                <option disabled>Please select a category</option>
+                <option *ngFor="let category of categories" value="{{ category.id }}-{{ category.data.category }}">
+                  {{category.data.category}}</option>
+              </select>
+              <div *ngIf="FC['category'].errors?.['required']">
+                <div class="bg-red-300 py-1 text-center" *ngIf="FC['category'].touched && FC['category'].invalid">
+                  Please select a category.
+                </div>
+              </div>
+            </div>
+            <!-- post image -->
+            <div class="grid grid-cols-1">
+              <label class="text-lg" for="">Post Image</label>
+              <img [src]="imgSrc" alt="">
+              <input class="px-4 py-2" type="file" accept="image/*" (change)="showPreview($event)"
+                formControlName="postImg">
+              <div *ngIf="FC['postImg'].errors?.['required']">
+                <p class="bg-red-300 py-1 text-center" *ngIf="FC['postImg'].touched && FC['postImg'].invalid">Post image
+                  is
+                  required</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4">
+          <label for="" class="text-lg">Content</label>
+          <angular-editor placeholder="Add your content here..." formControlName="content"></angular-editor>
+          <div *ngIf="FC['content'].errors?.['required']">
+            <p class="bg-red-300 py-1 text-center" *ngIf="FC['content'].touched && FC['content'].invalid">content is
+              required
+            </p>
+          </div>
+          <div class="flex justify-center gap-4">
+            <button class="px-4 py-2 bg-emerald-500 hover:bg-emerald-800 text-white" type="submit"
+              [disabled]="postForm.invalid">Save Post</button>
+            <button class="px-4 py-2 bg-amber-500 " routerLink="/posts">Back to
+              Posts</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+
+
+</div>

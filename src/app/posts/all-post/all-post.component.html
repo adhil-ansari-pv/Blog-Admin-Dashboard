@@ -1,0 +1,63 @@
+<div class="container mx-auto flex flex-col justify-center items-center bg-[#e5f5ec] shadow-xl p-6">
+  <p class="text-3xl text-slate-600">All Blog Posts</p>
+  <p class="text-slate-400 p-2">From here you can manage your blog posts.</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 space-y-2 items-center md:space-x-4">
+    <button class="w-44 bg-emerald-500 text-white px-4 py-2" routerLink="/posts/new">Add New Post</button>
+    <button class="w-44 bg-amber-500 text-gray-800 px-4 py-2" routerLink="/">Back to Dashboard</button>
+  </div>
+</div>
+<div class="container mx-auto bg-slate-100  mt-6 w-full">
+
+  <div class="hidden md:flex justify-between p-4">
+    <th class="w-12">NO</th>
+    <th class="w-44 md:w-52">Post image</th>
+    <th class="w-40 ">Title</th>
+    <th class="w-72 ">Excerpt</th>
+    <th class="w-40">Category</th>
+    <th class="w-40">Date</th>
+    <th class="w-40">Actions</th>
+  </div>
+
+  <div class="flex flex-col gap-4 w-full">
+    <div *ngFor="let post of postArray ; let i = index">
+
+      <div class="overflow-x-auto">
+
+        <div class="flex md:hidden w-max justify-between border-2 px-4">
+          <th class="w-12">NO</th>
+          <th class="w-44 md:w-52">Post image</th>  
+          <th class="w-40 ">Title</th>
+          <th class="w-72 ">Excerpt</th>
+          <th class="w-40">Category</th>
+          <th class="w-40">Date</th>
+          <th class="w-40">Actions</th>
+        </div>
+
+        <div class="flex gap-1 justify-between max-h-44 min-w-max bg-red-100 md:flex-row md:h-44 px-4 py-2 text-lg">
+          <div class="p-2 bg-white  text-center w-12">{{i+1}}</div>
+          <div class="flex items-center w-44 scale-100 bg-lime-200 md:w-52 max-h-40"><img src="{{post.data.postImgPath}}" alt=""></div>
+          <div class="p-2 bg-white text-center w-40 break-words overflow-y-auto">{{post.data.title}}</div>
+          <div class="p-2 bg-white text-center w-72 break-words overflow-y-auto">{{post.data.excerpt}}</div>
+          <div class="p-2 bg-white w-40 break-words overflow-y-auto text-center">{{post.data.category.category}}</div>
+          <div class="p-2 bg-white text-center  w-40">{{post.data.createdAt.toMillis() | date}}</div>
+          <div class="flex flex-col items-center justify-center gap-4 p-2 bg-white w-40">
+
+            <div class="space-x-2">
+              <button class="w-16 text-center bg-emerald-500 text-base text-white" routerLink="/posts/new"
+                [queryParams]="{id:post.id}">Edit</button>
+              <button class="w-16 text-center bg-orange-500 text-base text-white"
+                (click)="onDelete(post.data.postImgPath,post.id)">Delete</button>
+            </div>
+
+
+            <button *ngIf="!post.data.isFeatured" class="px-4 text-center bg-emerald-800 text-base text-white" (click)="onFeatured(post.id, true)" >Mark
+              Featured</button>
+            <button *ngIf="post.data.isFeatured" class="px-4 text-center bg-orange-800 text-base text-white" (click)="onFeatured(post.id, false)" >Remove
+              Featured</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

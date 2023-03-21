@@ -1,0 +1,41 @@
+<div
+  class="container md:h-[750px] flex justify-center items-center mx-auto bg-slate-100"
+>
+  <div
+    class="flex flex-col h-fit justify-center items-center bg-emerald-400 p-4"
+  >
+    <p class="text-3xl">Login</p>
+    <p class="p-4">
+      Please login to your admin account to post a new blog post
+    </p>
+    <form class="flex flex-col items-center gap-4" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
+      <input
+        type="email"
+        class="p-4"
+        placeholder="Email"
+        name="email"
+        #Email="ngModel"
+        ngModel
+        required
+        email
+      />
+      <div *ngIf="Email.touched && Email.invalid">
+        <p class="bg-transparent text-red-600 text-center" *ngIf="Email.errors?.['required']">Email Cannot be empty</p>
+        <p class="bg-transparent text-red-600 text-center" *ngIf="Email.errors?.['email']">Please Enter a Valid Email Address</p>
+      </div>
+
+      <input
+        type="password"
+        class="p-4"
+        placeholder="password"
+        name="password"
+        #Password="ngModel"
+        ngModel
+        required
+        pattern
+      />
+      <p class="bg-transparent text-red-600 text-center" *ngIf="Password.touched && Password.invalid">Password Cannot be empty</p>
+      <button class="bg-orange-300 w-full py-4" [disabled]="loginForm.invalid">Login</button>
+    </form>
+  </div>
+</div>

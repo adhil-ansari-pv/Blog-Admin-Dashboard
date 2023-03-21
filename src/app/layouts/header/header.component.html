@@ -1,0 +1,22 @@
+<header
+  class="flex bg-white sticky top-0 z-30 w-full shadow-2xl text-gray-600 justify-center items-center text-lg h-16"
+>
+  <div class="container flex items-center justify-around">
+    <a
+      routerLink="/"
+      class="-bg--secondary-color py-1 px-5 rounded-3xl -text--primary-color"
+    >
+      ANG-BLOG
+    </a>
+    <div class="flex flex-col items-center justify-center md:flex-row px-4" *ngIf="isLoggedIn$ | async">
+      <a
+        href="#"
+        class="-bg--secondary-color py-1 px-5 rounded-xl -text--primary-color underline"
+        >{{ userEmail }}
+      </a>
+      <button class="bg-red-100 text-sm w-fit px-4" (click)="onLogOut()">
+        log out
+      </button>
+    </div>
+  </div>
+</header>
